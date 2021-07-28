@@ -1,20 +1,27 @@
 # This is a kafkaproducer Config File
 # ---
 # Kafka
-#kafkaBootStrapServers: "172.16.0.64:9092, 172.16.0.81:9092"
-#kafkaBootStrapServers: "150.82.97.204:9092"
 kafka:
   topicName: "topicName"
+  #bootStrapServers: "172.16.0.64:9092, 172.16.0.81:9092"
+  #bootStrapServers: "150.82.97.204:9092"
   bootStrapServers: "localhost:9092"
   asyncLoading: True
 
 # Query parameters
 query:
+  # random, gaussian
   option: "random"
+
+data:
+  # format : GeoJSON or CSV
+  format: "GeoJSON"
+  dateFormat: "yyyy-MM-dd HH:mm:ss"
   numberOfObjects: 100
   numberOfRows: 100000000
-  dataBBox: [115.5, 39.6, 117.6, 41.1]
-  dateFormat: "yyyy-MM-dd HH:mm:ss"
-    # format : GeoJSON or CSV
-  dataFormat: "GeoJSON"
-  varianceRange: [0.5 2.5]
+  # generationRate in tuples per second (currently not used)
+  generationRate: 5000
+  # minX, minY, maxX, maxY
+  bBox: [115.5, 39.6, 117.6, 41.1]
+  # minVariance, maxVariance
+  varianceRange: [0.5, 2.5]
