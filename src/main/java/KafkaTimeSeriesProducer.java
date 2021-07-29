@@ -22,7 +22,8 @@ public class KafkaTimeSeriesProducer extends Thread {
         Double maxY = params.bBox.get(3);
         Integer maxObjID = params.numberOfObjects;
         String dateTimeFormat = params.dateFormat;
-        Double variance = params.varianceRange.get(0);
+        Double minVariance = params.varianceRange.get(0);
+        Double maxVariance = params.varianceRange.get(1);
         //SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long startTime = System.nanoTime();
@@ -35,7 +36,7 @@ public class KafkaTimeSeriesProducer extends Thread {
                 break;
             }
             case "gaussian": {
-                timeSeriesGenerator.generate2DGaussian(numRows, maxObjID, variance, minX, minY, maxX, maxY, dateTimeFormat);
+                timeSeriesGenerator.generate2DGaussian(numRows, maxObjID, minVariance, minX, minY, maxX, maxY, dateTimeFormat);
                 break;
             }
         }
