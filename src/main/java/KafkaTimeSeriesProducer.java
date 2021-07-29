@@ -8,26 +8,21 @@ public class KafkaTimeSeriesProducer extends Thread {
 
     public static void main(String [] args){
 
-        // Check how many arguments were passed in
-        if(args.length < 12)
-        {
-            System.out.println("Proper Usage is: java -jar jarFileName queryOption(random, gaussian) topicName bootstrapServers(localhost:9092 OR 172.16.0.97:9092,172.16.0.56:9092) " +
-                    "numRows DataBoundary (minX minY maxX maxY) maxObjIDInt dateTimeFormat variance");
-            System.exit(0);
-        }
+        Params params = new Params();
+        System.out.println(params);
 
-        String queryOption = args[0];
-        String topicName = args[1];
-        String bootStrapServers = args[2];
-        Boolean isAsync = Boolean.parseBoolean(args[3]);
-        Integer numRows = Integer.parseInt(args[4]);
-        Double minX = Double.parseDouble(args[5]);
-        Double minY = Double.parseDouble(args[6]);
-        Double maxX = Double.parseDouble(args[7]);
-        Double maxY = Double.parseDouble(args[8]);
-        Integer maxObjID = Integer.parseInt(args[9]);
-        String dateTimeFormat = args[10];
-        Double variance = Double.parseDouble(args[11]);
+        String queryOption = params.option;
+        String topicName = params.topicName;
+        String bootStrapServers = params.bootStrapServers;
+        Boolean isAsync = params.asyncLoading;
+        Integer numRows = params.numberOfRows;
+        Double minX = params.bBox.get(0);
+        Double minY = params.bBox.get(1);
+        Double maxX = params.bBox.get(2);
+        Double maxY = params.bBox.get(3);
+        Integer maxObjID = params.numberOfObjects;
+        String dateTimeFormat = params.dateFormat;
+        Double variance = params.varianceRange.get(0);
         //SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         long startTime = System.nanoTime();
