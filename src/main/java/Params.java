@@ -1,6 +1,5 @@
 import org.apache.flink.shaded.jackson2.org.yaml.snakeyaml.Yaml;
 import org.apache.flink.shaded.jackson2.org.yaml.snakeyaml.constructor.Constructor;
-
 import java.io.*;
 
 import java.util.ArrayList;

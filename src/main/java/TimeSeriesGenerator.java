@@ -43,7 +43,7 @@ public class TimeSeriesGenerator {
         }
     }
 
-    public void generate2DGaussian(Integer numRows, Integer maxObjID, Double variance, Double minX, Double minY, Double maxX, Double maxY, String dateFormat){
+    public void generate2DGaussian(Integer numRows, Integer maxObjID, Double minVariance, Double maxVariance, Double minX, Double minY, Double maxX, Double maxY, String dateFormat){
 
         KafkaProducer kafkaProducer = new KafkaProducer(topicName, bootStrapServers ,true);
 
@@ -69,7 +69,11 @@ public class TimeSeriesGenerator {
                     //System.out.println(point.getValue1());
 
                     do {
+                        double variance;
+                        // generating random variance
+                        variance = minVariance + new Random().nextDouble() * (maxVariance - minVariance);
                         x = point.getValue0() + fRandom.nextGaussian() * variance;
+                        variance = minVariance + new Random().nextDouble() * (maxVariance - minVariance);
                         y = point.getValue1() + fRandom.nextGaussian() * variance;
                     } while(x < minX || x > maxX || y < minY || y > maxY);
 

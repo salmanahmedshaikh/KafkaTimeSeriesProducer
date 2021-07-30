@@ -36,7 +36,7 @@ public class KafkaTimeSeriesProducer extends Thread {
                 break;
             }
             case "gaussian": {
-                timeSeriesGenerator.generate2DGaussian(numRows, maxObjID, minVariance, minX, minY, maxX, maxY, dateTimeFormat);
+                timeSeriesGenerator.generate2DGaussian(numRows, maxObjID, minVariance, maxVariance, minX, minY, maxX, maxY, dateTimeFormat);
                 break;
             }
         }

@@ -17,7 +17,10 @@ data:
   # format : GeoJSON or CSV
   format: "GeoJSON"
   dateFormat: "yyyy-MM-dd HH:mm:ss"
-  numberOfObjects: 100
+  # numberOfTrajectories at any time instant
+  numberOfTrajectories: 100
+  # minTrajLength and maxTrajLength in number of points
+  trajectoryLength: []
   numberOfRows: 100000000
   # generationRate in tuples per second (currently not used)
   generationRate: 5000
