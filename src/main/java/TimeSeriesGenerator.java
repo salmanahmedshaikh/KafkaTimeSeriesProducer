@@ -1,5 +1,7 @@
 import org.javatuples.Pair;
 
+import org.json.JSONObject;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,7 +34,8 @@ public class TimeSeriesGenerator {
                 double y = (Math.random() * (maxY - minY)) + minY;
                 int objID = (int) ((Math.random() * (maxObjID - 0)) + 0);
                 String dateTimeString = dateTimeFormat.format(new Date());
-                line = "{\"geometry\":{\"coordinates\":[" + x + "," + y + "], \"type\": \"Point\"}, \"properties\": {\"oID\":\"" + String.valueOf(objID) + "\", \"timestamp\":\"" + dateTimeString + "\"}, \"type\": \"Feature\"}";
+//                line = "{\"geometry\":{\"coordinates\":[" + x + "," + y + "], \"type\": \"Point\"}, \"properties\": {\"oID\":\"" + String.valueOf(objID) + "\", \"timestamp\":\"" + dateTimeString + "\"}, \"type\": \"Feature\"}";
+                line = generatePointJson(x, y, objID, dateTimeString).toString();
                 lineCount++;
                 System.out.println(line);
                 //kafkaProducer.sendMessage(lineCount + "", line);
@@ -96,5 +99,23 @@ public class TimeSeriesGenerator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+	
+    private JSONObject generatePointJson(double x, double y, int objID, String dateTimeString) {
+        JSONObject jsonObj = new JSONObject();
+
+        JSONObject jsonGeometry = new JSONObject();
+        double[] coordinate = {x, y};
+        jsonGeometry.put("coordinates", coordinate);
+        jsonGeometry.put("type", "Point");
+        jsonObj.put("geometry", jsonGeometry);
+
+        JSONObject jsonpProperties = new JSONObject();
+        jsonpProperties.put("oID", String.valueOf(objID));
+        jsonpProperties.put("timestamp", dateTimeString);
+        jsonObj.put("properties", jsonpProperties);
+
+        jsonObj.put("type", "Feature");
+        return jsonObj;
     }
 }
