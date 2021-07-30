@@ -1,4 +1,4 @@
-public class KafkaTimeSeriesProducer extends Thread {
+public class mainClass extends Thread {
 
     //private static final String topicName = "allDetections_rep1_par8";
     //public static final String folderName = "/home/ubuntu/data/prediction_stream/";
