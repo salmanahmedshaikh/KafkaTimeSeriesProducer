@@ -34,8 +34,8 @@ public class TimeSeriesGenerator {
                 String dateTimeString = dateTimeFormat.format(new Date());
                 line = "{\"geometry\":{\"coordinates\":[" + x + "," + y + "], \"type\": \"Point\"}, \"properties\": {\"oID\":\"" + String.valueOf(objID) + "\", \"timestamp\":\"" + dateTimeString + "\"}, \"type\": \"Feature\"}";
                 lineCount++;
-                //System.out.println(line);
-                kafkaProducer.sendMessage(lineCount + "", line);
+                System.out.println(line);
+                //kafkaProducer.sendMessage(lineCount + "", line);
             }
 
         } catch (Exception e) {

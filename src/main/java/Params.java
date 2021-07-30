@@ -102,15 +102,15 @@ public class Params {
             throw new IllegalArgumentException("dateFormat : " + e);
         }
         try {
-            if(config.getData().get("numberOfObjects") == null) {
-                throw new NullPointerException("numberOfObjects is " + config.getData().get("numberOfObjects"));
+            if(config.getData().get("numberOfTrajectories") == null) {
+                throw new NullPointerException("numberOfTrajectories is " + config.getData().get("numberOfObjects"));
             }
             else {
-                numberOfObjects = (int)config.getData().get("numberOfObjects");
+                numberOfObjects = (int)config.getData().get("numberOfTrajectories");
             }
         }
         catch (ClassCastException e) {
-            throw new IllegalArgumentException("numberOfObjects : " + e);
+            throw new IllegalArgumentException("numberOfTrajectories : " + e);
         }
         try {
             if(config.getData().get("numberOfRows") == null) {
