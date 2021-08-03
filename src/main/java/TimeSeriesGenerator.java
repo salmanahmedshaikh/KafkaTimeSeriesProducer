@@ -1,12 +1,10 @@
 import org.javatuples.Pair;
 
 import org.json.JSONObject;
+import org.locationtech.jts.geom.Coordinate;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class TimeSeriesGenerator {
 
@@ -108,6 +106,110 @@ public class TimeSeriesGenerator {
         double[] coordinate = {x, y};
         jsonGeometry.put("coordinates", coordinate);
         jsonGeometry.put("type", "Point");
+        jsonObj.put("geometry", jsonGeometry);
+
+        JSONObject jsonpProperties = new JSONObject();
+        jsonpProperties.put("oID", String.valueOf(objID));
+        jsonpProperties.put("timestamp", dateTimeString);
+        jsonObj.put("properties", jsonpProperties);
+
+        jsonObj.put("type", "Feature");
+        return jsonObj;
+    }
+
+    private JSONObject generatePolygonJson(List<List<Coordinate>> nestedCoordinateList, int objID, String dateTimeString) {
+        JSONObject jsonObj = new JSONObject();
+
+        JSONObject jsonGeometry = new JSONObject();
+        List<List<double[]>> jsonCoordinate = new ArrayList<List<double[]>>();
+        for (List<Coordinate> polygonCoordinates : nestedCoordinateList) {
+            List<double[]> coordinates = new ArrayList<double[]>();
+            for (Coordinate c : polygonCoordinates) {
+                double[] coordinate = {c.x, c.y};
+                coordinates.add(coordinate);
+            }
+            jsonCoordinate.add(coordinates);
+        }
+        jsonGeometry.put("type", "Polygon");
+        jsonGeometry.put("coordinates", jsonCoordinate);
+        jsonObj.put("geometry", jsonGeometry);
+
+        JSONObject jsonpProperties = new JSONObject();
+        jsonpProperties.put("oID", String.valueOf(objID));
+        jsonpProperties.put("timestamp", dateTimeString);
+        jsonObj.put("properties", jsonpProperties);
+
+        jsonObj.put("type", "Feature");
+        return jsonObj;
+    }
+
+    private JSONObject generateMultiPolygonJson(List<List<List<Coordinate>>> nestedCoordinateList, int objID, String dateTimeString) {
+        JSONObject jsonObj = new JSONObject();
+
+        JSONObject jsonGeometry = new JSONObject();
+        List<List<List<double[]>>> jsonCoordinate = new ArrayList<List<List<double[]>>>();
+        for (List<List<Coordinate>> listCoordinate : nestedCoordinateList) {
+            List<List<double[]>> coordinates = new ArrayList<>();
+            for (List<Coordinate> l : listCoordinate) {
+                List<double[]> arrCoordinate = new ArrayList<double[]>();
+                for (Coordinate c : l) {
+                    double[] coordinate = {c.x, c.y};
+                    arrCoordinate.add(coordinate);
+                }
+                coordinates.add(arrCoordinate);
+            }
+            jsonCoordinate.add(coordinates);
+        }
+        jsonGeometry.put("type", "MultiPolygon");
+        jsonGeometry.put("coordinates", jsonCoordinate);
+        jsonObj.put("geometry", jsonGeometry);
+
+        JSONObject jsonpProperties = new JSONObject();
+        jsonpProperties.put("oID", String.valueOf(objID));
+        jsonpProperties.put("timestamp", dateTimeString);
+        jsonObj.put("properties", jsonpProperties);
+
+        jsonObj.put("type", "Feature");
+        return jsonObj;
+    }
+
+    private JSONObject generateLineStringJson(List<Coordinate> nestedCoordinateList, int objID, String dateTimeString) {
+        JSONObject jsonObj = new JSONObject();
+
+        JSONObject jsonGeometry = new JSONObject();
+        List<double[]> jsonCoordinate = new ArrayList<double[]>();
+        for (Coordinate c : nestedCoordinateList) {
+            double[] coordinate = {c.x, c.y};
+            jsonCoordinate.add(coordinate);
+        }
+        jsonGeometry.put("type", "LineString");
+        jsonGeometry.put("coordinates", jsonCoordinate);
+        jsonObj.put("geometry", jsonGeometry);
+
+        JSONObject jsonpProperties = new JSONObject();
+        jsonpProperties.put("oID", String.valueOf(objID));
+        jsonpProperties.put("timestamp", dateTimeString);
+        jsonObj.put("properties", jsonpProperties);
+
+        jsonObj.put("type", "Feature");
+        return jsonObj;
+    }
+
+    private JSONObject generateMultiLineStringJson(List<List<Coordinate>> nestedCoordinateList, int objID, String dateTimeString) {
+        JSONObject jsonObj = new JSONObject();
+
+        JSONObject jsonGeometry = new JSONObject();
+        List<List<double[]>> jsonCoordinate = new ArrayList<>();
+        for (List<Coordinate> l : nestedCoordinateList) {
+            List<double[]> arrCoordinate = new ArrayList<>();
+            for (Coordinate c : l) {
+                double[] coordinate = {c.x, c.y};
+                arrCoordinate.add(coordinate);
+            }
+            jsonCoordinate.add(arrCoordinate);
+        }
+        jsonGeometry.put("type", "MultiLineString");
+        jsonGeometry.put("coordinates", jsonCoordinate);
         jsonObj.put("geometry", jsonGeometry);
 
         JSONObject jsonpProperties = new JSONObject();
