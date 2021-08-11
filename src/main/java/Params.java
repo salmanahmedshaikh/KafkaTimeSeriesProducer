@@ -28,11 +28,14 @@ public class Params {
     /* data */
     public String format;
     public String dateFormat;
-    public int numberOfObjects;
-    public int numberOfRows;
+    //public int numberOfObjects;
+    public int nRows;
     public int generationRate;
     public List<Double> bBox;
     public List<Double> varianceRange;
+    public List<Integer> nSidesRange;
+    public List<Integer> nLineSegmentsRange;
+    public List<Integer> objIDRange;
 
     public Params() throws NullPointerException, IllegalArgumentException, NumberFormatException {
         ConfigType config = getYamlConfig(YAML_PATH);
@@ -102,26 +105,15 @@ public class Params {
             throw new IllegalArgumentException("dateFormat : " + e);
         }
         try {
-            if(config.getData().get("numberOfTrajectories") == null) {
-                throw new NullPointerException("numberOfTrajectories is " + config.getData().get("numberOfObjects"));
+            if(config.getData().get("nRows") == null) {
+                throw new NullPointerException("nRows is " + config.getData().get("nRows"));
             }
             else {
-                numberOfObjects = (int)config.getData().get("numberOfTrajectories");
+                nRows = (int)config.getData().get("nRows");
             }
         }
         catch (ClassCastException e) {
-            throw new IllegalArgumentException("numberOfTrajectories : " + e);
-        }
-        try {
-            if(config.getData().get("numberOfRows") == null) {
-                throw new NullPointerException("numberOfRows is " + config.getData().get("numberOfRows"));
-            }
-            else {
-                numberOfRows = (int)config.getData().get("numberOfRows");
-            }
-        }
-        catch (ClassCastException e) {
-            throw new IllegalArgumentException("numberOfRows : " + e);
+            throw new IllegalArgumentException("nRows : " + e);
         }
         try {
             if(config.getData().get("generationRate") == null) {
@@ -156,6 +148,39 @@ public class Params {
         catch (ClassCastException e) {
             throw new IllegalArgumentException("varianceRange : " + e);
         }
+        try {
+            if ((nSidesRange = (ArrayList)config.getData().get("nSidesRange")) == null) {
+                throw new NullPointerException("nSidesRange is " + config.getData().get("nSidesRange"));
+            }
+            if (nSidesRange.size() != 2) {
+                throw new IllegalArgumentException("nSidesRange num is " + nSidesRange.size());
+            }
+        }
+        catch (ClassCastException e) {
+            throw new IllegalArgumentException("nSidesRange : " + e);
+        }
+        try {
+            if ((nLineSegmentsRange = (ArrayList)config.getData().get("nLineSegmentsRange")) == null) {
+                throw new NullPointerException("nLineSegmentsRange is " + config.getData().get("nLineSegmentsRange"));
+            }
+            if (nLineSegmentsRange.size() != 2) {
+                throw new IllegalArgumentException("nLineSegmentsRange num is " + nLineSegmentsRange.size());
+            }
+        }
+        catch (ClassCastException e) {
+            throw new IllegalArgumentException("nLineSegmentsRange : " + e);
+        }
+        try {
+            if ((objIDRange = (ArrayList)config.getData().get("objIDRange")) == null) {
+                throw new NullPointerException("objIDRange is " + config.getData().get("objIDRange"));
+            }
+            if (objIDRange.size() != 2) {
+                throw new IllegalArgumentException("objIDRange num is " + objIDRange.size());
+            }
+        }
+        catch (ClassCastException e) {
+            throw new IllegalArgumentException("objIDRange : " + e);
+        }
     }
 
     private ConfigType getYamlConfig(String path) {
@@ -187,8 +212,7 @@ public class Params {
                 "\n" +
                 "format = " + format + ", " +
                 "dateFormat = " + dateFormat + ", " +
-                "numberOfObjects = " + numberOfObjects + ", " +
-                "numberOfRows = " + numberOfRows + ", " +
+                "nRows = " + nRows + ", " +
                 "generationRate = " + generationRate + ", " +
                 "bBox = " + bBox + ", " +
                 "varianceRange = " + varianceRange + ", " +

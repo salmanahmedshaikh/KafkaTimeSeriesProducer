@@ -2,29 +2,33 @@
 # ---
 # Kafka
 kafka:
-  topicName: "topicName"
+  topicName: "knnTestTopic2"
   #bootStrapServers: "172.16.0.64:9092, 172.16.0.81:9092"
-  #bootStrapServers: "150.82.97.204:9092"
-  bootStrapServers: "localhost:9092"
+  bootStrapServers: "150.82.97.204:9092"
+  #bootStrapServers: "localhost:9092"
   asyncLoading: True
 
 # Query parameters
 query:
-  # random, gaussian
-  option: "random"
+  # randomPoints, gaussianPoints, randomLineStrings, randomPolygons
+  option: "randomPolygons"
 
 data:
   # format : GeoJSON or CSV
   format: "GeoJSON"
   dateFormat: "yyyy-MM-dd HH:mm:ss"
-  # numberOfTrajectories at any time instant
-  numberOfTrajectories: 100
+  # numberOfTrajectories at any time instant. Time stream object IDs are generated in the following range
+  objIDRange: [0, 50]
   # minTrajLength and maxTrajLength in number of points
-  trajectoryLength: []
-  numberOfRows: 100000000
+  trajectoryLength: [100, 1000]
+  nRows: 100
   # generationRate in tuples per second (currently not used)
   generationRate: 5000
   # minX, minY, maxX, maxY
   bBox: [115.5, 39.6, 117.6, 41.1]
   # minVariance, maxVariance
-  varianceRange: [0.5, 2.5]
+  varianceRange: [0.0005, 0.005]
+  # Number of sides range for polygon stream. Set both the values same for fixed number of sides
+  nSidesRange: [3, 5]
+  # Number of sides range for polygon stream. Set both the values same for fixed number of sides
+  nLineSegmentsRange: [2, 10]
