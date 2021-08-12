@@ -41,36 +41,8 @@ public class PointStream extends TimeSeriesGenerator {
         }
     }
 
-    /*
-    // Point Series Generators
-    public void random2DPoints(int nRows, int minObjID, int maxObjID, Envelope env, String dateFormat){
 
-        //KafkaProducer kafkaProducer = new KafkaProducer(topicName, bootStrapServers, isAsync);
-        try {
-            SimpleDateFormat dateTimeFormat = new SimpleDateFormat(dateFormat);
-            int lineCount = 0;
-
-            while (lineCount < nRows) {
-
-                int objID = (int) HelperClass.getRandomDoubleInRange(minObjID, maxObjID);
-                String dateTimeString = dateTimeFormat.format(new Date());
-
-                Coordinate XYRandomTuple = HelperClass.generateRandomXYTuple(env);
-                String line = HelperClass.generatePointJson(XYRandomTuple.x, XYRandomTuple.y, objID, dateTimeString).toString();
-
-                lineCount++;
-                System.out.println(line);
-                //kafkaProducer.sendMessage(lineCount + "", line);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-     */
-
-
-    public void gaussian2DPoints(int nRows, int minObjID, int maxObjID, Double minVariance, Double maxVariance, Envelope env, String dateFormat){
+    public void gaussian(int nRows, int minObjID, int maxObjID, Double minVariance, Double maxVariance, Envelope env, String dateFormat){
 
         //KafkaProducer kafkaProducer = new KafkaProducer(topicName, bootStrapServers, isAsync);
         //Pair<Double, Double> point = new Pair<Double, Double>();

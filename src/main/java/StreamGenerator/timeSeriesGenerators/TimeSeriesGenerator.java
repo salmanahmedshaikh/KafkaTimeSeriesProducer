@@ -23,9 +23,6 @@ public abstract class TimeSeriesGenerator {
     }
 
     public abstract void random(int nRows, int minObjID, int maxObjID, Envelope env, String dateFormat);
-
-
-
-
+    public abstract void gaussian(int nRows, int minObjID, int maxObjID, Double minVariance, Double maxVariance, Envelope env, String dateFormat);
 
 }

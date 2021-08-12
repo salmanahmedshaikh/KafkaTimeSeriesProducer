@@ -71,7 +71,7 @@ public class mainClass extends Thread {
                 break;
             }
             case "gaussianPoints": {
-                pointStream.gaussian2DPoints(numRows, minObjID, maxObjID, minVariance, maxVariance, env, dateTimeFormat);
+                pointStream.gaussian(numRows, minObjID, maxObjID, minVariance, maxVariance, env, dateTimeFormat);
                 break;
             }
             case "randomLineStrings": {
