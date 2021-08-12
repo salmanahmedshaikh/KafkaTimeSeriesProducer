@@ -19,6 +19,9 @@
 package StreamGenerator;
 
 import StreamGenerator.parameters.Params;
+import StreamGenerator.timeSeriesGenerators.LineStringStream;
+import StreamGenerator.timeSeriesGenerators.PointStream;
+import StreamGenerator.timeSeriesGenerators.PolygonStream;
 import StreamGenerator.timeSeriesGenerators.TimeSeriesGenerator;
 import org.locationtech.jts.geom.Envelope;
 
@@ -58,23 +61,25 @@ public class mainClass extends Thread {
         //SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         long startTime = System.nanoTime();
 
-        TimeSeriesGenerator timeSeriesGenerator = new TimeSeriesGenerator(topicName, bootStrapServers, isAsync);
+        PointStream pointStream = new PointStream(topicName, bootStrapServers, isAsync);
+        PolygonStream polygonStream = new PolygonStream(topicName, bootStrapServers, isAsync, minPolygonSides, maxPolygonSides);
+        LineStringStream lineStringStream = new LineStringStream(topicName, bootStrapServers, isAsync, minLineStringSegments, maxLineStringSegments);
 
         switch(queryOption) {
             case "randomPoints": {
-                timeSeriesGenerator.random2DPoints(numRows, minObjID, maxObjID, env, dateTimeFormat);
+                pointStream.random(numRows, minObjID, maxObjID, env, dateTimeFormat);
                 break;
             }
             case "gaussianPoints": {
-                timeSeriesGenerator.gaussian2DPoints(numRows, minObjID, maxObjID, minVariance, maxVariance, env, dateTimeFormat);
+                pointStream.gaussian2DPoints(numRows, minObjID, maxObjID, minVariance, maxVariance, env, dateTimeFormat);
                 break;
             }
             case "randomLineStrings": {
-                timeSeriesGenerator.randomLineStrings(numRows, minObjID, maxObjID, minLineStringSegments, maxLineStringSegments, env, dateTimeFormat);
+                lineStringStream.random(numRows, minObjID, maxObjID, env, dateTimeFormat);
                 break;
             }
             case "randomPolygons": {
-                timeSeriesGenerator.randomPolygons(numRows, minObjID, maxObjID, minPolygonSides, maxPolygonSides, env, dateTimeFormat);
+                polygonStream.random(numRows, minObjID, maxObjID, env, dateTimeFormat);
                 break;
             }
             default:
