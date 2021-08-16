@@ -10,8 +10,8 @@ kafka:
 
 # Query parameters
 query:
-  # randomPoints, gaussianPoints, randomLineStrings, randomPolygons
-  option: "randomPolygons"
+  # randomPoints, gaussianPoints, randomLineStrings, randomPolygons, gaussianPolygons
+  option: "gaussianPolygonsdd"
 
 data:
   # format : GeoJSON or CSV
@@ -21,14 +21,15 @@ data:
   objIDRange: [0, 50]
   # minTrajLength and maxTrajLength in number of points
   trajectoryLength: [100, 1000]
-  nRows: 100
+  nRows: 500000
   # generationRate in tuples per second (currently not used)
   generationRate: 5000
   # minX, minY, maxX, maxY
   bBox: [115.5, 39.6, 117.6, 41.1]
+  #bBox: [0.0, 0.0, 1000.0, 1000.0]
   # minVariance, maxVariance
-  varianceRange: [0.0005, 0.005]
+  varianceRange: [0.05, 0.5]
   # Number of sides range for polygon stream. Set both the values same for fixed number of sides
-  nSidesRange: [3, 5]
+  nSidesRange: [4, 5]
   # Number of sides range for polygon stream. Set both the values same for fixed number of sides
-  nLineSegmentsRange: [2, 10]
+  nLineSegmentsRange: [4, 10]

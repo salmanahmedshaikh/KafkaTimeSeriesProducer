@@ -18,12 +18,19 @@
 
 package StreamGenerator;
 
-import StreamGenerator.parameters.Params;
+import StreamGenerator.geometryGenerator.GeometryGenerator;
+import StreamGenerator.geometryGenerator.PolygonGenerator;
+import StreamGenerator.inputParameters.Params;
 import StreamGenerator.timeSeriesGenerators.LineStringStream;
 import StreamGenerator.timeSeriesGenerators.PointStream;
 import StreamGenerator.timeSeriesGenerators.PolygonStream;
 import StreamGenerator.timeSeriesGenerators.TimeSeriesGenerator;
+import StreamGenerator.utils.ConvexPolygonGenerator;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.GeometryFactory;
+
+import java.awt.geom.Point2D;
+import java.util.List;
 
 public class mainClass extends Thread {
 
@@ -51,8 +58,8 @@ public class mainClass extends Thread {
         int minObjID = params.objIDRange.get(0);
         int maxObjID = params.objIDRange.get(1);
         String dateTimeFormat = params.dateFormat;
-        double minVariance = params.varianceRange.get(0);
-        double maxVariance = params.varianceRange.get(1);
+        double minSeriesVar = params.varianceRange.get(0);
+        double maxSeriesVar = params.varianceRange.get(1);
         int minPolygonSides = params.nSidesRange.get(0);
         int maxPolygonSides = params.nSidesRange.get(1);
         int minLineStringSegments = params.nLineSegmentsRange.get(0);
@@ -62,8 +69,20 @@ public class mainClass extends Thread {
         long startTime = System.nanoTime();
 
         PointStream pointStream = new PointStream(topicName, bootStrapServers, isAsync);
-        PolygonStream polygonStream = new PolygonStream(topicName, bootStrapServers, isAsync, minPolygonSides, maxPolygonSides);
+        PolygonStream polygonStream = new PolygonStream(topicName, bootStrapServers, isAsync, minPolygonSides, maxPolygonSides, 0.0005, 0.005);
         LineStringStream lineStringStream = new LineStringStream(topicName, bootStrapServers, isAsync, minLineStringSegments, maxLineStringSegments);
+
+        //System.out.println(ConvexPolygonGenerator.generateRandomConvexPolygon(5));
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        PolygonGenerator polygonGenerator = GeometryGenerator.createPolygonGenerator();
+        polygonGenerator.setGeometryFactory(geometryFactory);
+        polygonGenerator.setBoundingBox(env);
+        polygonGenerator.setNumberPoints(9);
+        polygonGenerator.setNumberHoles(0);
+        //polygonGenerator.setGenerationAlgorithm(0);
+        System.out.println(polygonGenerator.create());
+
 
         switch(queryOption) {
             case "randomPoints": {
@@ -71,7 +90,7 @@ public class mainClass extends Thread {
                 break;
             }
             case "gaussianPoints": {
-                pointStream.gaussian(numRows, minObjID, maxObjID, minVariance, maxVariance, env, dateTimeFormat);
+                pointStream.gaussian(numRows, minObjID, maxObjID, env, dateTimeFormat, minSeriesVar, maxSeriesVar);
                 break;
             }
             case "randomLineStrings": {
@@ -80,6 +99,10 @@ public class mainClass extends Thread {
             }
             case "randomPolygons": {
                 polygonStream.random(numRows, minObjID, maxObjID, env, dateTimeFormat);
+                break;
+            }
+            case "gaussianPolygons": {
+                polygonStream.gaussian(numRows, minObjID, maxObjID, env, dateTimeFormat, minSeriesVar, maxSeriesVar);
                 break;
             }
             default:

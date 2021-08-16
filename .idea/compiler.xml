@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="kafkaTimeSeriesProducer" target="7" />
+      <module name="kafkaTimeSeriesProducer" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

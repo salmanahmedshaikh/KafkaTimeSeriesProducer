@@ -1,4 +1,4 @@
-package StreamGenerator.parameters;
+package StreamGenerator.inputParameters;
 
 import java.util.Map;
 

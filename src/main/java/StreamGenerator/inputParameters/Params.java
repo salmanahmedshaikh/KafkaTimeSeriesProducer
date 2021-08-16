@@ -1,4 +1,4 @@
-package StreamGenerator.parameters;
+package StreamGenerator.inputParameters;
 
 import org.apache.flink.shaded.jackson2.org.yaml.snakeyaml.Yaml;
 import org.apache.flink.shaded.jackson2.org.yaml.snakeyaml.constructor.Constructor;

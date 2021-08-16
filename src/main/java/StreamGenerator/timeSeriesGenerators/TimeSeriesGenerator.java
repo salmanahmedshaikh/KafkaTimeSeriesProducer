@@ -10,12 +10,16 @@ import java.util.*;
 
 public abstract class TimeSeriesGenerator {
 
-    public final String topicName;
-    public final String bootStrapServers;
-    public final Boolean isAsync;
-    public final KafkaProducer kafkaProducer;
+    protected final int NUM_OF_SEGMENTS = 3;
+    protected final double SEGMENT_LENGTH_VARIANCE = 0.0001;
+    protected final int NUM_OF_POLYGON_HOLES = 0;
 
-    public TimeSeriesGenerator(String topicName, String bootStrapServers, Boolean isAsync){
+    protected final String topicName;
+    protected final String bootStrapServers;
+    protected final Boolean isAsync;
+    protected final KafkaProducer kafkaProducer;
+
+    protected TimeSeriesGenerator(String topicName, String bootStrapServers, Boolean isAsync){
         this.topicName = topicName;
         this.bootStrapServers = bootStrapServers;
         this.isAsync = isAsync;
@@ -23,6 +27,6 @@ public abstract class TimeSeriesGenerator {
     }
 
     public abstract void random(int nRows, int minObjID, int maxObjID, Envelope env, String dateFormat);
-    public abstract void gaussian(int nRows, int minObjID, int maxObjID, Double minVariance, Double maxVariance, Envelope env, String dateFormat);
+    public abstract void gaussian(int nRows, int minObjID, int maxObjID, Envelope seriesBBox, String dateFormat, double minSeriesVar, double maxSeriesVar);
 
 }
