@@ -15,6 +15,12 @@ public class PolygonStream extends TimeSeriesGenerator{
     private final int minPolygonSides;
     private final int maxPolygonSides;
 
+    public PolygonStream(String topicName, String bootStrapServers, Boolean isAsync) {
+        super(topicName, bootStrapServers, isAsync);
+
+        this.minPolygonSides = 3;
+        this.maxPolygonSides = 3;
+    }
 
     public PolygonStream(String topicName, String bootStrapServers, Boolean isAsync, int minPolygonSides, int maxPolygonSides) {
         super(topicName, bootStrapServers, isAsync);
