@@ -24,8 +24,6 @@ import StreamGenerator.inputParameters.Params;
 import StreamGenerator.timeSeriesGenerators.LineStringStream;
 import StreamGenerator.timeSeriesGenerators.PointStream;
 import StreamGenerator.timeSeriesGenerators.PolygonStream;
-import StreamGenerator.timeSeriesGenerators.TimeSeriesGenerator;
-import StreamGenerator.utils.ConvexPolygonGenerator;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.GeometryFactory;
 

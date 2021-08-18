@@ -3,7 +3,7 @@ package StreamGenerator.utils;
 //import jdk.internal.util.xml.impl.Pair;
 import org.json.JSONObject;
 import org.locationtech.jts.geom.*;
-import org.locationtech.jts.shape.GeometricShapeBuilder;
+import org.locationtech.jts.io.WKTWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -416,12 +416,24 @@ public class HelperClass {
         }
         jsonObj.put("geometry", jsonGeometry);
 
-        JSONObject jsonpProperties = new JSONObject();
-        jsonpProperties.put("oID", String.valueOf(objID));
-        jsonpProperties.put("timestamp", dateTimeString);
-        jsonObj.put("properties", jsonpProperties);
+        JSONObject jsonProperties = new JSONObject();
+        jsonProperties.put("oID", String.valueOf(objID));
+        jsonProperties.put("timestamp", dateTimeString);
+        jsonObj.put("properties", jsonProperties);
 
         jsonObj.put("type", "Feature");
         return jsonObj;
+    }
+
+    public static String generateGeometryWKT(Geometry geometry, int objID, String dateTimeString, String separator) {
+        StringBuffer buf = new StringBuffer();
+        buf.append(objID);
+        buf.append(separator + " ");
+        buf.append(dateTimeString);
+        buf.append(separator + " ");
+
+        WKTWriter writer = new WKTWriter();
+        buf.append(writer.write(geometry));
+        return buf.toString();
     }
 }
